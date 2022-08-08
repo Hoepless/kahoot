@@ -1,0 +1,11 @@
+Django==3.2.7
+djangorestframework==3.12.4
+django-environ-2==2.1.0
+django-filter
+django-jazzmin
+djangorestframework_simplejwt==4.8.0
+PyJWT==2.1.0
+django-nested-admin
+Pillow
+django-super-inlines
+drf-spectacular
