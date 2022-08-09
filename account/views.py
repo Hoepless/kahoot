@@ -4,6 +4,8 @@ from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
 from rest_framework.filters import SearchFilter
 from rest_framework.permissions import IsAuthenticated
+from rest_framework.generics import GenericAPIView
+
 
 
 from .serializers import RegistrationSerializer, UserSerializer, GroupSerializer
@@ -11,7 +13,9 @@ from .models import User
 from django.contrib.auth.models import Group
 
 
-class RegisterView(APIView):
+class RegisterView(GenericAPIView):
+
+    serializer_class = RegistrationSerializer
 
     def post(self, request):
         data = request.data
