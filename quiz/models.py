@@ -50,7 +50,7 @@ class QuizTaker(models.Model):
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, related_name='quiztakers')
     questions = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='quiztaker', blank=True, null=True)
     answers = models.ForeignKey(Answer, on_delete=models.CASCADE, related_name='quiztaker', blank=True, null=True)
-    correct_answers = models.IntegerField(default=0)
+    correct_answers = models.IntegerField(default=0, null=True, blank=True)
     completed = models.BooleanField(default=False)
 
     def __str__(self):
@@ -59,7 +59,7 @@ class QuizTaker(models.Model):
 
 class QuizTakerResponse(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
-    quiz_taker = models.ForeignKey(QuizTaker, default=None, on_delete=models.CASCADE, null=True)
+    quiz_taker = models.ForeignKey(QuizTaker, default=None, on_delete=models.CASCADE, null=True, blank=True)
     quiz = models.ForeignKey(Quiz, on_delete=models.CASCADE, null=True, related_name='taker_response')
     question = models.ForeignKey(Question, on_delete=models.CASCADE, null=True)
     answer = models.ForeignKey(Answer, on_delete=models.CASCADE, null=True)
