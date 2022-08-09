@@ -72,12 +72,12 @@ class QuizTakerResponse(models.Model):
 
     @staticmethod
     def calculate_final_score(user: User, question_id, quiz_id, answer, is_submit, factual_time):
-        if is_submit:
-            QuizTakerResponse.quiz_count(user)
         question = Question.objects.get(pk=question_id)
         quiz = Quiz.objects.get(pk=quiz_id)
         score = 0
         taker_answer = question.answer_set.get(text=answer)
+        if is_submit:
+            QuizTakerResponse.quiz_count(user)
         if question.get_correct_answer().text == taker_answer.text:
             if factual_time == 1:
                 score = 100 - (100 / question.question_time * factual_time) + (100 / question.question_time)
@@ -87,7 +87,8 @@ class QuizTakerResponse(models.Model):
         user.set_group_rating_place()
         user.set_rating_place()
 
-        return QuizTakerResponse.objects.create(score=score, user=user, quiz=quiz, answer=taker_answer, group=user.group)
+        return [QuizTakerResponse.objects.create(score=score, user=user, quiz=quiz, answer=taker_answer, group=user.group),
+               QuizTaker.objects.create(user=user, quiz=quiz, questions=question, answers=taker_answer, group=user.group)]
 
     @staticmethod
     def quiz_count(user: User):
