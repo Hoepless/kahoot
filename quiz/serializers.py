@@ -26,7 +26,7 @@ class QuizTakerResponseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = QuizTakerResponse
-        fields = ('question_id', 'answer_id', 'score'   , 'answer', 'quiz_id',
+        fields = ('question_id', 'answer_id', 'score', 'answer', 'quiz_id',
                   'factual_time', 'user', 'is_submit')
 
     def to_representation(self, instance):

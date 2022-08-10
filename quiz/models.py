@@ -76,6 +76,7 @@ class QuizTakerResponse(models.Model):
         quiz = Quiz.objects.get(pk=quiz_id)
         score = 0
         taker_answer = question.answer_set.get(text=answer)
+
         if is_submit:
             QuizTakerResponse.quiz_count(user)
         if question.get_correct_answer().text == taker_answer.text:
@@ -87,8 +88,7 @@ class QuizTakerResponse(models.Model):
         user.set_group_rating_place()
         user.set_rating_place()
 
-        return [QuizTakerResponse.objects.create(score=score, user=user, quiz=quiz, answer=taker_answer, group=user.group),
-               QuizTaker.objects.create(user=user, quiz=quiz, questions=question, answers=taker_answer, group=user.group)]
+        return QuizTakerResponse.objects.create(score=score, user=user, quiz=quiz, answer=taker_answer, group=user.group)
 
     @staticmethod
     def quiz_count(user: User):
